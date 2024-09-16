@@ -1,1 +1,1 @@
-hutool工具包之WordTree
+WordTree 可以用更少的空间存储更多的敏感词汇，实现更高效的敏感词查找

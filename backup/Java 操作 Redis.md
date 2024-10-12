@@ -98,3 +98,86 @@ age:{
 name:respond
 ```
 这时候序列化存储正常
+
+# Redisson
+Redisson 是一个 java 操作 Redis 的客户端， 提供了大量的分布式数据集来简化对 Redis 的操作和使用，可以让开发者像使用本地集合一样使用 Redis，完全感知不到 Redis 的存在。
+2 种引入方式
+spring boot starter 引入（不推荐，版本迭代太快，容易冲突）：https://github.com/redisson/redisson/tree/master/redisson-spring-boot-starter
+直接引入：https://github.com/redisson/redisson#quick-start
+```xml
+<dependency>
+   <groupId>org.redisson</groupId>
+   <artifactId>redisson</artifactId>
+   <version>3.37.0</version>
+</dependency>
+```
+创建redisson客户端
+```java
+@Configuration
+@ConfigurationProperties(prefix = "spring.redis")
+@Data
+public class RedissonConfig {
+
+    private String host;
+
+    private String port;
+
+    @Bean
+    public RedissonClient redissonClient(){
+        // 1.配置redis redis://127.0.0.1:6379
+        Config config = new Config();
+        String redis = String.format("redis://%s:%s", host, port);
+        config.useSingleServer().setAddress(redis).setDatabase(2);
+        // 2.创建RedissonClient
+        RedissonClient redisson = Redisson.create(config);
+        return redisson;
+    }
+}
+```
+然后创建测试类进行测试，示例代码如下：
+```java
+@SpringBootTest
+public class redissonTest {
+
+    @Resource
+    private RedissonClient redissonClient;
+
+    @Test
+    void test(){
+        RList<String> list = redissonClient.getList("test-list");
+        list.add("respond");
+        System.out.println("test-list = " + list.get(0));
+        //list.remove(0);
+    }
+}
+```
+输出结果如下：
+```
+test-list = respond
+```
+结果显示正确写入。
+## 分布式锁保证定时任务不重复执行
+```java
+void testWatchDog() {
+    RLock lock = redissonClient.getLock("yupao:precachejob:docache:lock");
+    try {
+        // 只有一个线程能获取到锁
+        if (lock.tryLock(0, -1, TimeUnit.MILLISECONDS)) {
+            // todo 实际要执行的方法
+            doSomeThings();
+            System.out.println("getLock: " + Thread.currentThread().getId());
+        }
+    } catch (InterruptedException e) {
+        System.out.println(e.getMessage());
+    } finally {
+        // 只能释放自己的锁
+        if (lock.isHeldByCurrentThread()) {
+            System.out.println("unLock: " + Thread.currentThread().getId());
+            lock.unlock();
+        }
+    }
+}
+```
+### 注意：
+#### 1.waitTime 设置为 0，只抢一次，抢不到就放弃
+#### 2.注意释放锁要写在 finally 中

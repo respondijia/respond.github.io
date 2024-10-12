@@ -288,7 +288,80 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 }
 name:respond
 </code></pre>
-<p>这时候序列化存储正常</p></div>
+<p>这时候序列化存储正常</p>
+<h1>Redisson</h1>
+<p>Redisson 是一个 java 操作 Redis 的客户端， 提供了大量的分布式数据集来简化对 Redis 的操作和使用，可以让开发者像使用本地集合一样使用 Redis，完全感知不到 Redis 的存在。<br>
+2 种引入方式<br>
+spring boot starter 引入（不推荐，版本迭代太快，容易冲突）：<a href="https://github.com/redisson/redisson/tree/master/redisson-spring-boot-starter">https://github.com/redisson/redisson/tree/master/redisson-spring-boot-starter</a><br>
+直接引入：<a href="https://github.com/redisson/redisson#quick-start">https://github.com/redisson/redisson#quick-start</a></p>
+<div class="highlight highlight-text-xml"><pre class="notranslate">&lt;<span class="pl-ent">dependency</span>&gt;
+   &lt;<span class="pl-ent">groupId</span>&gt;org.redisson&lt;/<span class="pl-ent">groupId</span>&gt;
+   &lt;<span class="pl-ent">artifactId</span>&gt;redisson&lt;/<span class="pl-ent">artifactId</span>&gt;
+   &lt;<span class="pl-ent">version</span>&gt;3.37.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+<p>创建redisson客户端</p>
+<div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">Configuration</span>
+<span class="pl-c1">@</span><span class="pl-c1">ConfigurationProperties</span>(<span class="pl-s1">prefix</span> = <span class="pl-s">"spring.redis"</span>)
+<span class="pl-c1">@</span><span class="pl-c1">Data</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">RedissonConfig</span> {
+
+    <span class="pl-k">private</span> <span class="pl-smi">String</span> <span class="pl-s1">host</span>;
+
+    <span class="pl-k">private</span> <span class="pl-smi">String</span> <span class="pl-s1">port</span>;
+
+    <span class="pl-c1">@</span><span class="pl-c1">Bean</span>
+    <span class="pl-k">public</span> <span class="pl-smi">RedissonClient</span> <span class="pl-en">redissonClient</span>(){
+        <span class="pl-c">// 1.配置redis redis://127.0.0.1:6379</span>
+        <span class="pl-smi">Config</span> <span class="pl-s1">config</span> = <span class="pl-k">new</span> <span class="pl-smi">Config</span>();
+        <span class="pl-smi">String</span> <span class="pl-s1">redis</span> = <span class="pl-smi">String</span>.<span class="pl-en">format</span>(<span class="pl-s">"redis://%s:%s"</span>, <span class="pl-s1">host</span>, <span class="pl-s1">port</span>);
+        <span class="pl-s1">config</span>.<span class="pl-en">useSingleServer</span>().<span class="pl-en">setAddress</span>(<span class="pl-s1">redis</span>).<span class="pl-en">setDatabase</span>(<span class="pl-c1">2</span>);
+        <span class="pl-c">// 2.创建RedissonClient</span>
+        <span class="pl-smi">RedissonClient</span> <span class="pl-s1">redisson</span> = <span class="pl-smi">Redisson</span>.<span class="pl-en">create</span>(<span class="pl-s1">config</span>);
+        <span class="pl-k">return</span> <span class="pl-s1">redisson</span>;
+    }
+}</pre></div>
+<p>然后创建测试类进行测试，示例代码如下：</p>
+<div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">SpringBootTest</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-smi">redissonTest</span> {
+
+    <span class="pl-c1">@</span><span class="pl-c1">Resource</span>
+    <span class="pl-k">private</span> <span class="pl-smi">RedissonClient</span> <span class="pl-s1">redissonClient</span>;
+
+    <span class="pl-c1">@</span><span class="pl-c1">Test</span>
+    <span class="pl-smi">void</span> <span class="pl-en">test</span>(){
+        <span class="pl-smi">RList</span>&lt;<span class="pl-smi">String</span>&gt; <span class="pl-s1">list</span> = <span class="pl-s1">redissonClient</span>.<span class="pl-en">getList</span>(<span class="pl-s">"test-list"</span>);
+        <span class="pl-s1">list</span>.<span class="pl-en">add</span>(<span class="pl-s">"respond"</span>);
+        <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s">"test-list = "</span> + <span class="pl-s1">list</span>.<span class="pl-en">get</span>(<span class="pl-c1">0</span>));
+        <span class="pl-c">//list.remove(0);</span>
+    }
+}</pre></div>
+<p>输出结果如下：</p>
+<pre class="notranslate"><code class="notranslate">test-list = respond
+</code></pre>
+<p>结果显示正确写入。</p>
+<h2>分布式锁保证定时任务不重复执行</h2>
+<div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-smi">void</span> <span class="pl-s1">testWatchDog</span>() {
+    <span class="pl-smi">RLock</span> <span class="pl-s1">lock</span> = <span class="pl-s1">redissonClient</span>.<span class="pl-en">getLock</span>(<span class="pl-s">"yupao:precachejob:docache:lock"</span>);
+    <span class="pl-k">try</span> {
+        <span class="pl-c">// 只有一个线程能获取到锁</span>
+        <span class="pl-k">if</span> (<span class="pl-s1">lock</span>.<span class="pl-en">tryLock</span>(<span class="pl-c1">0</span>, -<span class="pl-c1">1</span>, <span class="pl-smi">TimeUnit</span>.<span class="pl-c1">MILLISECONDS</span>)) {
+            <span class="pl-c">// todo 实际要执行的方法</span>
+            <span class="pl-en">doSomeThings</span>();
+            <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s">"getLock: "</span> + <span class="pl-smi">Thread</span>.<span class="pl-en">currentThread</span>().<span class="pl-en">getId</span>());
+        }
+    } <span class="pl-k">catch</span> (<span class="pl-smi">InterruptedException</span> <span class="pl-s1">e</span>) {
+        <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s1">e</span>.<span class="pl-en">getMessage</span>());
+    } <span class="pl-k">finally</span> {
+        <span class="pl-c">// 只能释放自己的锁</span>
+        <span class="pl-k">if</span> (<span class="pl-s1">lock</span>.<span class="pl-en">isHeldByCurrentThread</span>()) {
+            <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s">"unLock: "</span> + <span class="pl-smi">Thread</span>.<span class="pl-en">currentThread</span>().<span class="pl-en">getId</span>());
+            <span class="pl-s1">lock</span>.<span class="pl-en">unlock</span>();
+        }
+    }
+}</pre></div>
+<h3>注意：</h3>
+<h4>1.waitTime 设置为 0，只抢一次，抢不到就放弃</h4>
+<h4>2.注意释放锁要写在 finally 中</h4></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

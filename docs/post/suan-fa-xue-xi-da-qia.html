@@ -114,7 +114,11 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <h1>算法打卡第四天(2024.10.18)</h1>
 <p>今天有点忙就只刷了一道题《跳跃游戏》，链接：<br>
 <a href="https://leetcode.cn/problems/jump-game/?envType=study-plan-v2&amp;envId=top-interview-150" rel="nofollow">https://leetcode.cn/problems/jump-game/?envType=study-plan-v2&amp;envId=top-interview-150</a><br>
-这道题直接做有点不好做，我们可以倒过来思考，如果可以从后面往前推，能推到第一个位置，说明就能从第一个位置跳到最后的位置，所以直接倒序遍历，然后不断更新标志位，如果最后标志位在下标位0的位置，就直接返回ture，否则返回false就行。</p></div>
+这道题直接做有点不好做，我们可以倒过来思考，如果可以从后面往前推，能推到第一个位置，说明就能从第一个位置跳到最后的位置，所以直接倒序遍历，然后不断更新标志位，如果最后标志位在下标位0的位置，就直接返回ture，否则返回false就行。</p>
+<h1>算法打卡第五天(2024.10.22)</h1>
+<p>今天做了一道H指数的题，链接：<br>
+<a href="https://leetcode.cn/problems/h-index/description/?envType=study-plan-v2&amp;envId=top-interview-150" rel="nofollow">https://leetcode.cn/problems/h-index/description/?envType=study-plan-v2&amp;envId=top-interview-150</a><br>
+题目说白了也就是在数组中寻找h个大于h的数，我们可以先给数组排个序，然后从后往前遍历，每遍历一个，num加一，当遍历到数组中的元素小于num时，此时num - 1就是最大的h，如果遍历完了都满足，说明每个元素都满足，直接返回数组长度即可。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

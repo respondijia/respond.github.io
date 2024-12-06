@@ -104,11 +104,11 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-k">static</span> {
     <span class="pl-c">// 初始化字典树</span>
     <span class="pl-c1">WORD_TREE</span> = <span class="pl-k">new</span> <span class="pl-smi">WordTree</span>();
-    <span class="pl-smi">WORD_TREE</span>.<span class="pl-en">addWords</span>(<span class="pl-s1">blackList</span>);
+    <span class="pl-c1">WORD_TREE</span>.<span class="pl-en">addWords</span>(<span class="pl-s1">blackList</span>);
 }</pre></div>
 <p>2）校验用户代码是否包含禁用词：</p>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c">//  校验代码中是否包含黑名单中的禁用词</span>
-<span class="pl-smi">FoundWord</span> <span class="pl-s1">foundWord</span> = <span class="pl-smi">WORD_TREE</span>.<span class="pl-en">matchWord</span>(<span class="pl-s1">code</span>);
+<span class="pl-smi">FoundWord</span> <span class="pl-s1">foundWord</span> = <span class="pl-c1">WORD_TREE</span>.<span class="pl-en">matchWord</span>(<span class="pl-s1">code</span>);
 <span class="pl-k">if</span> (<span class="pl-s1">foundWord</span> != <span class="pl-c1">null</span>) {
     <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s">"包含禁止词："</span> + <span class="pl-s1">foundWord</span>.<span class="pl-en">getFoundWord</span>());
     <span class="pl-k">return</span> <span class="pl-c1">null</span>;

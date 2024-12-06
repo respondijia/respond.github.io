@@ -123,22 +123,22 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 }</pre></div>
 <p>3）限制读权限：</p>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">Override</span>
-<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-s1">checkRead</span>(<span class="pl-smi">String</span> <span class="pl-s1">file</span>) {
+<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-en">checkRead</span>(<span class="pl-smi">String</span> <span class="pl-s1">file</span>) {
     <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">SecurityException</span>(<span class="pl-s">"checkRead 权限异常："</span> + <span class="pl-s1">file</span>);
 }</pre></div>
 <p>4）限制写文件权限：</p>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">Override</span>
-<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-s1">checkWrite</span>(<span class="pl-smi">String</span> <span class="pl-s1">file</span>) {
+<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-en">checkWrite</span>(<span class="pl-smi">String</span> <span class="pl-s1">file</span>) {
     <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">SecurityException</span>(<span class="pl-s">"checkWrite 权限异常："</span> + <span class="pl-s1">file</span>);
 }</pre></div>
 <p>5）限制执行文件权限：</p>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">Override</span>
-<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-s1">checkExec</span>(<span class="pl-smi">String</span> <span class="pl-s1">cmd</span>) {
+<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-en">checkExec</span>(<span class="pl-smi">String</span> <span class="pl-s1">cmd</span>) {
 	<span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">SecurityException</span>(<span class="pl-s">"checkExec 权限异常："</span> + <span class="pl-s1">cmd</span>);
 }</pre></div>
 <p>6）限制网络连接权限：</p>
 <div class="highlight highlight-source-java"><pre class="notranslate"><span class="pl-c1">@</span><span class="pl-c1">Override</span>
-<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-s1">checkConnect</span>(<span class="pl-smi">String</span> <span class="pl-s1">host</span>, <span class="pl-smi">int</span> <span class="pl-s1">port</span>) {
+<span class="pl-k">public</span> <span class="pl-smi">void</span> <span class="pl-en">checkConnect</span>(<span class="pl-smi">String</span> <span class="pl-s1">host</span>, <span class="pl-smi">int</span> <span class="pl-s1">port</span>) {
     <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">SecurityException</span>(<span class="pl-s">"checkConnect 权限异常："</span> + <span class="pl-s1">host</span> + <span class="pl-s">":"</span> + <span class="pl-s1">port</span>);
 }</pre></div>
 <h4>结合项目运用</h4>

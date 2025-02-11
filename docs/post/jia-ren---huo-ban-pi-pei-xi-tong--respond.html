@@ -13,14 +13,16 @@
 <meta name="description" content="# 2025.2.11
 这个项目断断续续做了几个月，今天差不多把基础功能以及一些基本的优化做的差不多了，想想也是该写一篇东西来记录一下了😎
 然后的话就基本是一些功能的拓展和优化了，看看最终能做到什么效果吧💕以下是目前打算做的一些功能拓展以及优化，冲冲冲😈
-1.联系我功能
- 首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。">
+
+## 1.联系我功能
+首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。">
 <meta property="og:title" content="佳人-伙伴匹配系统-respond">
 <meta property="og:description" content="# 2025.2.11
 这个项目断断续续做了几个月，今天差不多把基础功能以及一些基本的优化做的差不多了，想想也是该写一篇东西来记录一下了😎
 然后的话就基本是一些功能的拓展和优化了，看看最终能做到什么效果吧💕以下是目前打算做的一些功能拓展以及优化，冲冲冲😈
-1.联系我功能
- 首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。">
+
+## 1.联系我功能
+首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://respondijia.github.io/respond.github.io/post/jia-ren---huo-ban-pi-pei-xi-tong--respond.html">
 <meta property="og:image" content="https://tse3-mm.cn.bing.net/th/id/OIP-C.c-H6eHA2a-l-gZrI97vABQHaLT?w=134&h=205&c=7&r=0&o=5&dpr=1.5&pid=1.7">
@@ -82,13 +84,31 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><h1>2025.2.11</h1>
-<h2>这个项目断断续续做了几个月，今天差不多把基础功能以及一些基本的优化做的差不多了，想想也是该写一篇东西来记录一下了😎<br>
-然后的话就基本是一些功能的拓展和优化了，看看最终能做到什么效果吧💕以下是目前打算做的一些功能拓展以及优化，冲冲冲😈<br>
-1.联系我功能<br>
-首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。<br>
-2.文件上传功能<br>
-第二个算一个功能优化吧，方便用户上传头像以及创建队伍时上传队伍图片，不然老用坤坤感觉不太合适（我不是小黑子🤣<br>
-ok，目前想到的就这两个，后面边改边想吧，加纳~✌️</h2></div>
+<p>这个项目断断续续做了几个月，今天差不多把基础功能以及一些基本的优化做的差不多了，想想也是该写一篇东西来记录一下了😎<br>
+然后的话就基本是一些功能的拓展和优化了，看看最终能做到什么效果吧💕以下是目前打算做的一些功能拓展以及优化，冲冲冲😈</p>
+<h2>1.联系我功能</h2>
+<p>首先，我打算将这个设计成一个聊天的功能，提供一个基本的聊天界面，具体实现应该也就是用websocket来实现。</p>
+<h3>关键实现：</h3>
+<h3>组件结构：</h3>
+<p>使用van-list作为容器，van-cell作为消息项<br>
+头像使用van-image实现圆形头像<br>
+未读消息使用van-badge显示角标</p>
+<h3>数据管理：</h3>
+<p>使用ref创建响应式消息列表<br>
+每个消息项包含：头像、昵称、消息内容、时间、未读数量</p>
+<h3>功能特性：</h3>
+<p>时间格式化显示<br>
+未读消息超过99显示为"99+"<br>
+点击消息项可标记为已读（简单置零）</p>
+<h3>其他扩展：</h3>
+<p>添加下拉刷新（使用van-pull-refresh）<br>
+添加加载更多（结合van-list的load事件）<br>
+实现真实的时间格式化（推荐使用dayjs库）<br>
+添加消息长按操作菜单<br>
+集成WebSocket实现实时消息</p>
+<h2>2.文件上传功能</h2>
+<p>第二个算一个功能优化吧，方便用户上传头像以及创建队伍时上传队伍图片，不然老用坤坤感觉不太合适（我不是小黑子🤣<br>
+ok，目前想到的就这两个，后面边改边想吧，加纳~✌️</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

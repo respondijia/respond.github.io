@@ -17,7 +17,7 @@
 浮点型：1.float （4字节）、2.double（8字节）
 字符型：char（2字节）
 布尔型：boolean
-## 什么是java的多态特性
+## 什么是java的多态特性？
 多态就是指同一个接口或者父类引用变量可以指向不同的对象实例，并执行对应的方法。">
 <meta property="og:title" content="面试刷题">
 <meta property="og:description" content="# 2025.2.20
@@ -27,7 +27,7 @@
 浮点型：1.float （4字节）、2.double（8字节）
 字符型：char（2字节）
 布尔型：boolean
-## 什么是java的多态特性
+## 什么是java的多态特性？
 多态就是指同一个接口或者父类引用变量可以指向不同的对象实例，并执行对应的方法。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://respondijia.github.io/respond.github.io/post/mian-shi-shua-ti.html">
@@ -96,14 +96,47 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 浮点型：1.float （4字节）、2.double（8字节）<br>
 字符型：char（2字节）<br>
 布尔型：boolean</p>
-<h2>什么是java的多态特性</h2>
+<h2>什么是java的多态特性？</h2>
 <p>多态就是指同一个接口或者父类引用变量可以指向不同的对象实例，并执行对应的方法。通俗来讲就是，同一个变量可以根据情况new出不同的对象。<br>
 多态分为 <em><strong>运行时多态</strong></em> 和 <em><strong>编译时多态</strong></em><br>
 <strong>运行时多态</strong>：通过方法的 <em><strong>重写</strong></em> 实现，在运行时确定方法的调用<br>
 <strong>编译时多态</strong>：通过方法的 <em><strong>重载</strong></em> 实现，在编译时确定方法的调用</p>
 <h2>Java中深拷贝与浅拷贝的区别</h2>
 <p><strong>深拷贝</strong>：不仅会拷贝对象本身，对象中引用的对象也会被拷贝，也就是说修改新拷贝出来的对象，原对象不会被修改<br>
-<strong>浅拷贝</strong>：仅会拷贝对象本身，修改新拷贝的对象中的类型字段，原对象也会被修改，因为他们共享同一个引用</p></div>
+<strong>浅拷贝</strong>：仅会拷贝对象本身，修改新拷贝的对象中的类型字段，原对象也会被修改，因为他们共享同一个引用</p>
+<h1>2025.2.21</h1>
+<h2>常见的HTTP状态码有哪些？</h2>
+<p>1**：信息响应<br>
+<strong>100</strong>：请求成功，继续请求服务端资源<br>
+<strong>101</strong>：服务器同意切换协议，如http切换为websocket<br>
+2**：请求成功<br>
+<strong>200</strong>：请求资源成功<br>
+3**：重定向<br>
+<strong>301</strong>：资源切换到新的url，客户端应请求新的客户端<br>
+<strong>302</strong>：资源暂时切换到新的url，客户端应请求原来的客户端<br>
+<strong>304</strong>：资源未修改，客户端可以请求缓存版本<br>
+4**：客户端错误<br>
+<strong>400</strong>：请求无效或语法错误，服务器无法响应<br>
+<strong>401</strong>：未认证，没有权限访问<br>
+<strong>403</strong>：已认证但是权限不够访问资源<br>
+<strong>404</strong>：找不到请求的资源<br>
+5**：服务器错误<br>
+<strong>500</strong>：服务器内部错误<br>
+<strong>502</strong>：服务器作为网关接收到上游服务器无效响应<br>
+<strong>503</strong>：服务器暂时无法处理请求</p>
+<h2>HTTP请求包含哪些内容？常见的请求头和请求体的类型有哪些？</h2>
+<p>HTTP请求包含：<br>
+1.<strong>请求头</strong>：包含请求的方式，请求的路径以及http协议版本等<br>
+2.<strong>请求行</strong>：键值对，包含请求内容，认证信息等<br>
+3.<strong>空行</strong>：用于分隔请求行和请求体<br>
+4.<strong>请求体</strong>：（post和put请求才会有）包含需要发送到服务器的内容<br>
+常见请求头类型有：通用头部，请求头部，实体头部<br>
+常见请求体类型有：表单数据，json数据，xml数据，多部分数据，文本数据</p>
+<h2>HTTP和HTTPS有什么区别</h2>
+<p>传输安全性：http明文传输，容易被窃取和篡改，而https则通过ssl/tls协议进行加密传输<br>
+端口：http使用的是<strong>80</strong>端口，而https使用的是<strong>443</strong>端口<br>
+性能：http无需加密，连接建立快，而https三次握手过后还需要通过ssl或tls进行加密，加大了时间性能开销，不过现代科技已经将差距变得很小<br>
+搜索引擎一般会优先展示https网站</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

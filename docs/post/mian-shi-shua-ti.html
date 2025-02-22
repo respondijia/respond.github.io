@@ -136,7 +136,18 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>传输安全性：http明文传输，容易被窃取和篡改，而https则通过ssl/tls协议进行加密传输<br>
 端口：http使用的是<strong>80</strong>端口，而https使用的是<strong>443</strong>端口<br>
 性能：http无需加密，连接建立快，而https三次握手过后还需要通过ssl或tls进行加密，加大了时间性能开销，不过现代科技已经将差距变得很小<br>
-搜索引擎一般会优先展示https网站</p></div>
+搜索引擎一般会优先展示https网站</p>
+<h1>2025.2.22</h1>
+<h2>mysql的索引类型有哪些？</h2>
+<p>1.按数据结构分为：B+树索引，R-树索引，倒排索引（全文索引），哈希索引<br>
+2.按索引性质分为：普通索引，联合索引，唯一索引，全文索引，空间索引，主键索引<br>
+3.基于InnoDB B+树索引分为：聚簇索引和非聚簇索引</p>
+<h2>mysql中数据排序是怎么实现的？</h2>
+<p>如果查询数据命中索引的话会利用索引排序，否则进行文件排序<br>
+文件排序中，如果数据量大会进行归并排序，数据量小会进行单路排序或双路排序</p>
+<h2>InnoDB中聚簇索引和非聚簇索引的区别</h2>
+<p>聚簇索引：索引叶子节点存储的是整行数据，可以直接访问完整的数据，每张表只能有一个聚簇索引也就是主键索引，适用于范围查找和排序<br>
+非聚簇索引：索引叶子节点存储的是主键和对应的索引列，需要通过主键才能访问全部数据，一张表可以有多个非聚簇索引，适用于快速查找特定列的数据</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
